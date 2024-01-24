@@ -6,6 +6,7 @@ import (
 	"BookStoreApi-Go/Services"
 	"fmt"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
 )
 
@@ -15,6 +16,8 @@ func Start() {
 	fmt.Printf("Hello BookStore Api\n")
 	r := chi.NewRouter()
 	r.Use(Middleware.AddHeaders)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 
 	r.Group(func(r chi.Router) {
 		r.Use(Middleware.JwtAuth)
