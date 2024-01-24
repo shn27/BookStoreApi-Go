@@ -1,10 +1,10 @@
 package Middleware
 
 import (
+	"BookStoreApi-Go/Controller"
 	"bytes"
 	"encoding/base64"
 	"errors"
-	"github.com/go-chi/jwtauth/v5"
 	"log"
 	"net/http"
 	"strings"
@@ -37,17 +37,6 @@ func BasicAuth(next http.Handler) http.Handler {
 	})
 }
 
-var tokenAuth *jwtauth.JWTAuth
-
-func Init() string {
-	tokenAuth = jwtauth.New("HS256", []byte("secret"), nil) // replace with secret key
-
-	// For debugging/example purposes, we generate and print
-	// a sample jwt token with claims `user_id:123` here:
-	_, tokenString, _ := tokenAuth.Encode(map[string]interface{}{"user_id": 123})
-	return tokenString
-}
-
 func JwtAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 
@@ -62,11 +51,20 @@ func JwtAuth(next http.Handler) http.Handler {
 			}
 			return
 		}
-
-		if Init() != cookie.Value {
+		if Controller.Init() != cookie.Value {
 			http.Error(res, "Unauthorized", http.StatusUnauthorized)
 		}
 
 		next.ServeHTTP(res, req)
+	})
+}
+
+// AddHeaders adds some common header in the response.
+func AddHeaders(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Add {content-type : "application/json"}
+		w.Header().Add("content-type", "application/json")
+
+		next.ServeHTTP(w, r)
 	})
 }

@@ -26,9 +26,10 @@ func Login(res http.ResponseWriter, request *http.Request) {
 }
 
 var tokenAuth *jwtauth.JWTAuth
+var Secret string
 
 func Init() string {
-	tokenAuth = jwtauth.New("HS256", []byte("secret"), nil) // replace with secret key
+	tokenAuth = jwtauth.New("HS256", []byte(Secret), nil) // replace with secret key
 
 	// For debugging/example purposes, we generate and print
 	// a sample jwt token with claims `user_id:123` here:
