@@ -5,6 +5,7 @@ import (
 	"BookStoreApi-Go/Services"
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
+	"github.com/google/uuid"
 	"net/http"
 )
 
@@ -15,16 +16,16 @@ func Create(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, err.Error(), http.StatusBadRequest)
 		return
 	}
-	if Services.IsExist(book.UUID) == true {
-		http.Error(res, "Book Id already exist\n", http.StatusBadRequest)
-		return
-	}
+	book.UUID = uuid.New()
+	Services.IsUuidExist[book.UUID] = true
+
 	res.WriteHeader(http.StatusCreated)
 	Services.SaveBook(book, res)
 }
 
 func GetBookById(res http.ResponseWriter, req *http.Request) {
-	id := chi.URLParam(req, "id")
+	id1 := chi.URLParam(req, "id")
+	id, _ := uuid.Parse(id1)
 	if Services.IsExist(id) != true {
 		http.Error(res, "Book Id does not exist\n", http.StatusNotFound)
 		return
@@ -33,7 +34,8 @@ func GetBookById(res http.ResponseWriter, req *http.Request) {
 }
 
 func DeleteBookById(res http.ResponseWriter, req *http.Request) {
-	id := chi.URLParam(req, "id")
+	id1 := chi.URLParam(req, "id")
+	id, _ := uuid.Parse(id1)
 	if Services.IsExist(id) != true {
 		http.Error(res, "Book Id does not exist\n", http.StatusNotFound)
 		return
@@ -46,7 +48,8 @@ func GetAllBooks(res http.ResponseWriter, req *http.Request) {
 }
 
 func UpdateBookById(res http.ResponseWriter, req *http.Request) {
-	id := chi.URLParam(req, "id")
+	id1 := chi.URLParam(req, "id")
+	id, _ := uuid.Parse(id1)
 	if Services.IsExist(id) != true {
 		http.Error(res, "Book Id does not exist\n", http.StatusNotFound)
 		return

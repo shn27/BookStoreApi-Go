@@ -7,7 +7,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.11 // indirect
 	github.com/go-chi/jwtauth/v5 v5.3.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/google/uuid v1.5.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/lestrrat-go/blackmagic v1.0.2 // indirect
 	github.com/lestrrat-go/httpcc v1.0.1 // indirect
 	github.com/lestrrat-go/httprc v1.0.4 // indirect

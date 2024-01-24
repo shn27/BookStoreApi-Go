@@ -13,11 +13,10 @@ func Login(res http.ResponseWriter, request *http.Request) {
 	cookie := http.Cookie{
 		Name:    "jwt",
 		Value:   "",
-		Expires: time.Now().Add(60 * time.Second),
+		Expires: time.Now().Add(10 * time.Minute),
 		Path:    "/",
 	}
 	cookie.Value = Init()
-
 	http.SetCookie(res, &cookie)
 
 	res.Write([]byte("Cookie set!"))

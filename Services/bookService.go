@@ -4,20 +4,23 @@ import (
 	"BookStoreApi-Go/Model"
 	"encoding/json"
 	"fmt"
+	"github.com/google/uuid"
 	"net/http"
 )
 
-var bookList map[string]Model.Book
+var bookList map[uuid.UUID]Model.Book
+var IsUuidExist map[uuid.UUID]bool
 
 func Init() {
-	bookList = make(map[string]Model.Book)
+	bookList = make(map[uuid.UUID]Model.Book)
+	IsUuidExist = make(map[uuid.UUID]bool)
 }
 
-func IsExist(id string) bool {
-	if bookList[id].UUID == "" {
-		return false
+func IsExist(id uuid.UUID) bool {
+	if IsUuidExist[id] == true {
+		return true
 	}
-	return true
+	return false
 }
 
 func SaveBook(book Model.Book, res http.ResponseWriter) {
@@ -28,7 +31,7 @@ func SaveBook(book Model.Book, res http.ResponseWriter) {
 	res.Write(jsonBook)
 }
 
-func GetBookById(id string, res http.ResponseWriter) {
+func GetBookById(id uuid.UUID, res http.ResponseWriter) {
 	jsonBook, _ := json.Marshal(bookList[id])
 	res.Write(jsonBook)
 	//fmt.Fprint(res, "Name : ", bookList[id].Name, "\nAuthor: ", bookList[id].Author, "\n", "publishDate: ", bookList[id].PublishDate)
@@ -42,15 +45,17 @@ func GetAllBooks(res http.ResponseWriter) {
 	//	fmt.Fprint(res, "Name : ", bookList[id].Name, "\nAuthor: ", bookList[id].Author, "\n", "publishDate: ", bookList[id].PublishDate, "\n\n")
 	//}
 }
-func DeleteBookById(id string, res http.ResponseWriter) {
+func DeleteBookById(id uuid.UUID, res http.ResponseWriter) {
 	fmt.Fprint(res, "Book deleted successfully\n")
 	jsonBook, _ := json.Marshal(bookList[id])
 	res.Write(jsonBook)
 	delete(bookList, id)
+	IsUuidExist[id] = false
 }
 
-func UpdateBookById(id string, book Model.Book, res http.ResponseWriter) {
+func UpdateBookById(id uuid.UUID, book Model.Book, res http.ResponseWriter) {
 	delete(bookList, id)
+	book.UUID = id
 	bookList[id] = book
 	fmt.Fprint(res, "Book updated successfully\n")
 	jsonBook, _ := json.Marshal(book)
