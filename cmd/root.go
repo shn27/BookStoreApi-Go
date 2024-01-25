@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var port int
 var rootCmd = &cobra.Command{
 	Use:   "api",
 	Short: "BookStoreApi",
@@ -24,7 +25,7 @@ var rootCmd = &cobra.Command{
 			log.Fatal("Error loading .env file")
 		}
 		Controller.TokenAuth = jwtauth.New("HS256", []byte(os.Getenv("SECRET")), nil)
-		Routes.Start()
+		Routes.Start(port)
 	},
 }
 
@@ -33,4 +34,8 @@ func Execute() {
 	if err != nil {
 		os.Exit(1)
 	}
+}
+
+func init() {
+	rootCmd.PersistentFlags().IntVarP(&port, "port", "p", 3000, "port no for the server to run")
 }

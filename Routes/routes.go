@@ -6,21 +6,11 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/spf13/pflag"
 	"net/http"
 	"strconv"
 )
 
-var port int
-
-func init() {
-	pflag.IntVarP(&port, "port", "p", 3000, "port no for the server to run")
-	pflag.Parse()
-}
-
-func Start() {
-	//Services.Init()
-
+func Start(port int) {
 	fmt.Printf("Hello BookStore Api\n")
 	r := chi.NewRouter()
 	r.Use(Middleware.AddHeaders)

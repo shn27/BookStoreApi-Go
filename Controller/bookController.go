@@ -21,9 +21,8 @@ func Create(res http.ResponseWriter, req *http.Request) {
 	Services.IsUuidExist[book.UUID] = true
 
 	jsonBook := Services.SaveBook(book)
-	fmt.Fprint(res, "Book created successfully\n")
-	res.Write(jsonBook)
 	res.WriteHeader(http.StatusCreated)
+	res.Write(jsonBook)
 }
 
 func GetBookById(res http.ResponseWriter, req *http.Request) {
@@ -34,8 +33,8 @@ func GetBookById(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	jsonBook := Services.GetBookById(id)
-	res.Write(jsonBook)
 	res.WriteHeader(http.StatusOK)
+	res.Write(jsonBook)
 }
 
 func DeleteBookById(res http.ResponseWriter, req *http.Request) {
