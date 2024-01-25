@@ -3,7 +3,6 @@ package Services
 import (
 	"BookStoreApi-Go/Model"
 	"encoding/json"
-	"fmt"
 	"github.com/google/uuid"
 	"sync"
 )
@@ -13,7 +12,6 @@ var IsUuidExist map[uuid.UUID]bool
 var mu sync.Mutex
 
 func init() {
-	fmt.Println("init called")
 	bookList = make(map[uuid.UUID]Model.Book)
 	IsUuidExist = make(map[uuid.UUID]bool)
 }

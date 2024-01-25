@@ -6,8 +6,17 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/spf13/pflag"
 	"net/http"
+	"strconv"
 )
+
+var port int
+
+func init() {
+	pflag.IntVarP(&port, "port", "p", 3000, "port no for the server to run")
+	pflag.Parse()
+}
 
 func Start() {
 	//Services.Init()
@@ -31,5 +40,5 @@ func Start() {
 		r.Post("/login", Controller.Login)
 	})
 
-	http.ListenAndServe("localhost:3000", r)
+	http.ListenAndServe("localhost:"+strconv.Itoa(port), r)
 }
