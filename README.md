@@ -80,5 +80,5 @@ curl --location --request DELETE 'http://localhost:3000/books/61f7297e-63e0-4d82
 ```
 **References**
 -----------------------------------------------------------------
-https://www.alexedwards.net/blog/working-with-cookies-in-go
+https://www.alexedwards.net/blog/working-with-cookies-in-go </br>
 https://www.digitalocean.com/community/tutorials/how-to-use-json-in-go#using-a-map-to-generate-json
