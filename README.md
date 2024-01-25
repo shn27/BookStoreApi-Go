@@ -16,7 +16,7 @@ Use postman for testing.
 -----------------------------------------------------------------
 |method|url|body|action
 |-----|----|---|---|
-|GET| `http://localhost:port/bookStore/login` | --header 'Authorization: Basic c2FtaToxMjM0' | returns a JWT token $TOKEN into cookies|
+|GET| `http://localhost:port/login` | --header 'Authorization: Basic c2FtaToxMjM0' | returns a JWT token $TOKEN into cookies|
 |GET| `http://localhost:port/books` |   | returns all the books.|
 |GET| `http://localhost:port/books/{id}` |   | return a single book where Id = bookId.|
 |POST| `http://localhost:port/create` |   | Add the book. Return the addded book.|
