@@ -28,7 +28,7 @@ Use postman for testing.
 
 **cURL commands**
 -----------------------------------------------------------------
-**Login and receive a JWT $TOKEN (username: admin, password: 1234)**
+**Login and receive a JWT $TOKEN (give name and password as like as .env file)**
 ```
 curl --location --request POST 'http://localhost:3000/login' \
 --header 'Authorization: Basic YWRtaW46MTIzNA=='
