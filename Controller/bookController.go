@@ -19,9 +19,10 @@ func Create(res http.ResponseWriter, req *http.Request) {
 	}
 	book.UUID = uuid.New()
 	Services.IsUuidExist[book.UUID] = true
-	Services.SaveBook(book, res)
 
+	jsonBook := Services.SaveBook(book)
 	fmt.Fprint(res, "Book created successfully\n")
+	res.Write(jsonBook)
 	res.WriteHeader(http.StatusCreated)
 }
 
@@ -32,7 +33,9 @@ func GetBookById(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "Book Id does not exist\n", http.StatusNotFound)
 		return
 	}
-	Services.GetBookById(id, res)
+	jsonBook := Services.GetBookById(id)
+	res.Write(jsonBook)
+	res.WriteHeader(http.StatusOK)
 }
 
 func DeleteBookById(res http.ResponseWriter, req *http.Request) {
@@ -42,13 +45,15 @@ func DeleteBookById(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "Book Id does not exist\n", http.StatusNotFound)
 		return
 	}
-	Services.DeleteBookById(id, res)
+	jsonBook := Services.DeleteBookById(id)
 	fmt.Fprint(res, "Book deleted successfully\n")
+	res.Write(jsonBook)
 	res.WriteHeader(http.StatusOK)
 }
 
 func GetAllBooks(res http.ResponseWriter, req *http.Request) {
-	Services.GetAllBooks(res)
+	jsonBook := Services.GetAllBooks()
+	res.Write(jsonBook)
 	res.WriteHeader(http.StatusOK)
 }
 
@@ -65,7 +70,8 @@ func UpdateBookById(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, err.Error(), http.StatusBadRequest)
 		return
 	}
-	Services.UpdateBookById(id, book, res)
+	jsonBook := Services.UpdateBookById(id, book)
 	fmt.Fprint(res, "Book updated successfully\n")
+	res.Write(jsonBook)
 	res.WriteHeader(http.StatusOK)
 }

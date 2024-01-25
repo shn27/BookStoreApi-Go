@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-chi/jwtauth/v5"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -24,11 +25,9 @@ func Login(res http.ResponseWriter, request *http.Request) {
 	// Write a response
 }
 
-var tokenAuth *jwtauth.JWTAuth
-var Secret string
+var TokenAuth *jwtauth.JWTAuth
 
 func Jwt() string {
-	tokenAuth = jwtauth.New("HS256", []byte(Secret), nil) // replace with secret key
-	_, tokenString, _ := tokenAuth.Encode(map[string]interface{}{"admin": 1234})
+	_, tokenString, _ := TokenAuth.Encode(map[string]interface{}{os.Getenv("NAME"): os.Getenv("PASSWORD")})
 	return tokenString
 }

@@ -3,8 +3,8 @@ package Services
 import (
 	"BookStoreApi-Go/Model"
 	"encoding/json"
+	"fmt"
 	"github.com/google/uuid"
-	"net/http"
 	"sync"
 )
 
@@ -12,7 +12,8 @@ var bookList map[uuid.UUID]Model.Book
 var IsUuidExist map[uuid.UUID]bool
 var mu sync.Mutex
 
-func Init() {
+func init() {
+	fmt.Println("init called")
 	bookList = make(map[uuid.UUID]Model.Book)
 	IsUuidExist = make(map[uuid.UUID]bool)
 }
@@ -27,43 +28,42 @@ func IsExist(id uuid.UUID) bool {
 	return false
 }
 
-func SaveBook(book Model.Book, res http.ResponseWriter) {
+func SaveBook(book Model.Book) []byte {
 	mu.Lock()
 	bookList[book.UUID] = book
 	mu.Unlock()
 	jsonBook, _ := json.Marshal(book)
-	res.Write(jsonBook)
+	return jsonBook
 }
 
-func GetBookById(id uuid.UUID, res http.ResponseWriter) {
+func GetBookById(id uuid.UUID) []byte {
 	mu.Lock()
 	jsonBook, _ := json.Marshal(bookList[id])
 	mu.Unlock()
-	res.Write(jsonBook)
+	return jsonBook
 }
 
-func GetAllBooks(res http.ResponseWriter) {
+func GetAllBooks() []byte {
 	mu.Lock()
 	jsonBook, _ := json.Marshal(bookList)
 	mu.Unlock()
-	res.Write(jsonBook)
+	return jsonBook
 }
-func DeleteBookById(id uuid.UUID, res http.ResponseWriter) {
+func DeleteBookById(id uuid.UUID) []byte {
 	mu.Lock()
 	jsonBook, _ := json.Marshal(bookList[id])
-	res.Write(jsonBook)
 	delete(bookList, id)
 	IsUuidExist[id] = false
 	mu.Unlock()
+	return jsonBook
 }
 
-func UpdateBookById(id uuid.UUID, book Model.Book, res http.ResponseWriter) {
+func UpdateBookById(id uuid.UUID, book Model.Book) []byte {
 	mu.Lock()
 	delete(bookList, id)
 	book.UUID = id
 	bookList[id] = book
 	mu.Unlock()
-
 	jsonBook, _ := json.Marshal(book)
-	res.Write(jsonBook)
+	return jsonBook
 }

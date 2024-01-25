@@ -6,6 +6,9 @@ package cmd
 import (
 	"BookStoreApi-Go/Controller"
 	"BookStoreApi-Go/Routes"
+	"github.com/go-chi/jwtauth/v5"
+	"github.com/joho/godotenv"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -13,13 +16,17 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "BookStoreApi-Go",
+	Use:   "api",
 	Short: "BookStoreApi",
 	Long:  `BookStore Api Server.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		Controller.Secret = args[0]
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
+		Controller.TokenAuth = jwtauth.New("HS256", []byte(os.Getenv("SECRET")), nil)
 		Routes.Start()
 	},
 }

@@ -3,7 +3,6 @@ package Routes
 import (
 	"BookStoreApi-Go/Controller"
 	"BookStoreApi-Go/Middleware"
-	"BookStoreApi-Go/Services"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -11,7 +10,7 @@ import (
 )
 
 func Start() {
-	Services.Init()
+	//Services.Init()
 
 	fmt.Printf("Hello BookStore Api\n")
 	r := chi.NewRouter()
