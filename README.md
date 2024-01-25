@@ -8,6 +8,8 @@ Download Go, and set up their path variables.
 **Running the server**
 -----------------------------------------------------------------
 ```git clone git@github.com:shn27/BookStoreApi-Go.git``` </br>
+```go install```
+```go run main.go -p {port}```
 Use postman for testing.
 
 
