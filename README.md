@@ -78,3 +78,7 @@ curl --location --request PUT 'http://localhost:3000/books/4a53e853-c866-4e45-bc
 ```
 curl --location --request DELETE 'http://localhost:3000/books/61f7297e-63e0-4d82-9b8a-53bde32451d2'
 ```
+**References**
+-----------------------------------------------------------------
+https://www.alexedwards.net/blog/working-with-cookies-in-go
+https://www.digitalocean.com/community/tutorials/how-to-use-json-in-go#using-a-map-to-generate-json
