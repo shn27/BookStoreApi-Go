@@ -51,7 +51,7 @@ func JwtAuth(next http.Handler) http.Handler {
 			}
 			return
 		}
-		if Controller.Init() != cookie.Value {
+		if Controller.Jwt() != cookie.Value {
 			http.Error(res, "Unauthorized", http.StatusUnauthorized)
 		}
 

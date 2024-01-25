@@ -3,7 +3,6 @@ package Services
 import (
 	"BookStoreApi-Go/Model"
 	"encoding/json"
-	"fmt"
 	"github.com/google/uuid"
 	"net/http"
 	"sync"
@@ -33,8 +32,6 @@ func SaveBook(book Model.Book, res http.ResponseWriter) {
 	bookList[book.UUID] = book
 	mu.Unlock()
 	jsonBook, _ := json.Marshal(book)
-	fmt.Fprint(res, "Book created successfully\n")
-	res.WriteHeader(201)
 	res.Write(jsonBook)
 }
 
@@ -43,7 +40,6 @@ func GetBookById(id uuid.UUID, res http.ResponseWriter) {
 	jsonBook, _ := json.Marshal(bookList[id])
 	mu.Unlock()
 	res.Write(jsonBook)
-	//fmt.Fprint(res, "Name : ", bookList[id].Name, "\nAuthor: ", bookList[id].Author, "\n", "publishDate: ", bookList[id].PublishDate)
 }
 
 func GetAllBooks(res http.ResponseWriter) {
@@ -51,14 +47,8 @@ func GetAllBooks(res http.ResponseWriter) {
 	jsonBook, _ := json.Marshal(bookList)
 	mu.Unlock()
 	res.Write(jsonBook)
-
-	//for id, _ := range bookList {
-	//	fmt.Fprint(res, "Name : ", bookList[id].Name, "\nAuthor: ", bookList[id].Author, "\n", "publishDate: ", bookList[id].PublishDate, "\n\n")
-	//}
 }
 func DeleteBookById(id uuid.UUID, res http.ResponseWriter) {
-	fmt.Fprint(res, "Book deleted successfully\n")
-
 	mu.Lock()
 	jsonBook, _ := json.Marshal(bookList[id])
 	res.Write(jsonBook)
@@ -74,7 +64,6 @@ func UpdateBookById(id uuid.UUID, book Model.Book, res http.ResponseWriter) {
 	bookList[id] = book
 	mu.Unlock()
 
-	fmt.Fprint(res, "Book updated successfully\n")
 	jsonBook, _ := json.Marshal(book)
 	res.Write(jsonBook)
 }

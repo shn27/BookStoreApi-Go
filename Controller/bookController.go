@@ -4,6 +4,7 @@ import (
 	"BookStoreApi-Go/Model"
 	"BookStoreApi-Go/Services"
 	"encoding/json"
+	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"net/http"
@@ -18,9 +19,10 @@ func Create(res http.ResponseWriter, req *http.Request) {
 	}
 	book.UUID = uuid.New()
 	Services.IsUuidExist[book.UUID] = true
-
-	res.WriteHeader(http.StatusCreated)
 	Services.SaveBook(book, res)
+
+	fmt.Fprint(res, "Book created successfully\n")
+	res.WriteHeader(http.StatusCreated)
 }
 
 func GetBookById(res http.ResponseWriter, req *http.Request) {
@@ -41,10 +43,13 @@ func DeleteBookById(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	Services.DeleteBookById(id, res)
+	fmt.Fprint(res, "Book deleted successfully\n")
+	res.WriteHeader(http.StatusOK)
 }
 
 func GetAllBooks(res http.ResponseWriter, req *http.Request) {
 	Services.GetAllBooks(res)
+	res.WriteHeader(http.StatusOK)
 }
 
 func UpdateBookById(res http.ResponseWriter, req *http.Request) {
@@ -61,4 +66,6 @@ func UpdateBookById(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	Services.UpdateBookById(id, book, res)
+	fmt.Fprint(res, "Book updated successfully\n")
+	res.WriteHeader(http.StatusOK)
 }
