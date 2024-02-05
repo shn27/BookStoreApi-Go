@@ -82,3 +82,8 @@ curl --location --request DELETE 'http://localhost:3000/books/61f7297e-63e0-4d82
 -----------------------------------------------------------------
 https://www.alexedwards.net/blog/working-with-cookies-in-go </br>
 https://www.digitalocean.com/community/tutorials/how-to-use-json-in-go#using-a-map-to-generate-json
+
+**Docker Image**
+-----------------------------------------------------------------
+``` docker pull shn27/book-store:1.0 ```
+``` docker run -p 3000:3000 book-store:1.0 ```
