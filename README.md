@@ -85,5 +85,5 @@ https://www.digitalocean.com/community/tutorials/how-to-use-json-in-go#using-a-m
 
 **Docker Image**
 -----------------------------------------------------------------
-``` docker pull shn27/book-store:1.0 ```
+``` docker pull shn27/book-store:1.0 ``` </br>
 ``` docker run -p 3000:3000 book-store:1.0 ```
