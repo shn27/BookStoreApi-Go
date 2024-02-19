@@ -31,3 +31,20 @@ spec:
           imagePullPolicy:  {{ .Values.imagePullPolicy }}
           ports:
             - containerPort:  {{ .Values.ports.containerPort }}
+
+          env:
+            - name: NAME
+              valueFrom:
+                secretKeyRef:
+                  key: NAME
+                  name: {{ .Values.secret.name}}
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: PASSWORD
+                  name: {{ .Values.secret.name}}
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: SECRET
+                  name: {{ .Values.secret.name}}
