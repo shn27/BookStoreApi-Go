@@ -20,6 +20,6 @@ secret:
   name: env-secrets
   namespace: default
   data:
-    NAME: "admin"
-    PASSWORD: "1234"
-    SECRET: "hfdjksh732hihyf9"
+    name: "admin"
+    password: "12345"
+    secret: "hfdjksh732hihyf9"

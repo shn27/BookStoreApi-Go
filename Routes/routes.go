@@ -30,5 +30,5 @@ func Start(port int) {
 		r.Post("/login", Controller.Login)
 	})
 
-	http.ListenAndServe("localhost:"+strconv.Itoa(port), r)
+	http.ListenAndServe("0.0.0.0:"+strconv.Itoa(port), r)
 }

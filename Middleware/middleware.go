@@ -7,6 +7,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -28,7 +29,7 @@ func BasicAuth(next http.Handler) http.Handler {
 		username := string(uAuthInfo[:cx])
 		password := string(uAuthInfo[cx+1:])
 
-		if username != "admin" || password != "1234" {
+		if username != os.Getenv("NAME") || password != os.Getenv("PASSWORD") {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
