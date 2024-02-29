@@ -14,7 +14,7 @@ ports:
 
 image:
   name: shn27/book-store
-  tag: "2.0"
+  tag: "3.0"
 
 secret:
   name: env-secrets
