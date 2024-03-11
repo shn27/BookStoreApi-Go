@@ -3,6 +3,7 @@ package Controller
 import (
 	"BookStoreApi-Go/Model"
 	"BookStoreApi-Go/Services"
+	"BookStoreApi-Go/prometheusMetrics"
 	"encoding/json"
 	"fmt"
 	"github.com/go-chi/chi/v5"
@@ -23,6 +24,7 @@ func Create(res http.ResponseWriter, req *http.Request) {
 	jsonBook := Services.SaveBook(book)
 	res.WriteHeader(http.StatusCreated)
 	res.Write(jsonBook)
+	prometheusMetrics.BookCreateCounter.Inc()
 }
 
 func GetBookById(res http.ResponseWriter, req *http.Request) {
